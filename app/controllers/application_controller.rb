@@ -1,4 +1,4 @@
 class ApplicationController < ActionController::Base
-	helper :movies
+	#helper :movies
   protect_from_forgery
 end
