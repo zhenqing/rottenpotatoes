@@ -1,4 +1,5 @@
 Rottenpotatoes::Application.routes.draw do
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -13,7 +14,6 @@ Rottenpotatoes::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   resources :movies
-
   # Sample resource route with options:
   #   resources :products do
   #     member do
@@ -57,3 +57,4 @@ Rottenpotatoes::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+  
