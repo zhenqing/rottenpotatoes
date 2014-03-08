@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  attr_accessor :attr
+  attr_accessor :attr,:rating
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -15,7 +15,10 @@ class MoviesController < ApplicationController
     end 
 
     if (params[:ratings])
+      @ratings = params[:ratings]
       @movies = Movie.where(:rating => params[:ratings].keys)
+    else
+      @ratings = {"all"=>1}
     end
 
   end
