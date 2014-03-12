@@ -7,16 +7,25 @@ class MoviesController < ApplicationController
   end
 
   def index
+    attr=session[:attr]
+    ratings=session[:ratings]
     if (params[:attr])
       @attr=params[:attr]
+      session[:attr]=params[:attr]
       @movies = Movie.order(params[:attr])
-    else 
+    else if(session[:attr])
+      @attr=session[:attr]
+      @movies = Movie.order(session{:attr})
+    else
       @movies = Movie.all
     end 
 
     if (params[:ratings])
       @ratings = params[:ratings]
       @movies = Movie.where(:rating => params[:ratings].keys)
+    else if(session[:ratings])
+      @ratings = session[:ratings]
+      @ratings = MOvie.where(:rating => session[:ratings].keys)
     else
       @ratings = {"all"=>1}
     end
