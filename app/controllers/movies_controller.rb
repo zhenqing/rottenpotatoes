@@ -7,29 +7,41 @@ class MoviesController < ApplicationController
   end
 
   def index
-    attr=session[:attr]
-    ratings=session[:ratings]
-    if (params[:attr])
-      @attr=params[:attr]
-      session[:attr]=params[:attr]
-      @movies = Movie.order(params[:attr])
-    else if(session[:attr])
-      @attr=session[:attr]
-      @movies = Movie.order(session{:attr})
+    # url=Rails.application.routes.recognize_path(request.referrer)
+    # controller_name=url[:controller]
+    # action_name=url[:action]
+    controller_name=session[:controller_name]
+    action_name =session[:action_name]
+   
+    if(session[:controller_name]=="movies"&&session[:action_name]=="index")
+      redirect_to :controller=>"movies",:action=>"index"
     else
-      @movies = Movie.all
-    end 
-
-    if (params[:ratings])
-      @ratings = params[:ratings]
-      @movies = Movie.where(:rating => params[:ratings].keys)
-    else if(session[:ratings])
-      @ratings = session[:ratings]
-      @ratings = MOvie.where(:rating => session[:ratings].keys)
-    else
-      @ratings = {"all"=>1}
+      if(params[:attr])
+        session[:attr]=params[:attr]
+      end
+      if(params[:ratings])
+        session[:ratings]=params[:ratings]
+      end
+      @ratings=session[:ratings]
+      if(session[:attr])
+        @attr=session[:attr]
+        if(session[:ratings])
+          @ratings=session[:ratings]
+          @movies = Movie.order(@attr).where(:rating => @ratings.keys)
+        else
+          @ratings = {"all"=>1}
+          @movies = Movie.order(@attr)
+        end
+      else
+        if(session[:ratings])
+          @ratings=session[:ratings]
+          @movies = Movie.where(:rating => @ratings.keys)
+        else
+          @ratings = {"all"=>1}
+          @movies = Movie.all
+        end
+      end
     end
-
   end
   
 
